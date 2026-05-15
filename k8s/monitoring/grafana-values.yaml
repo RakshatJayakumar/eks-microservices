@@ -1,6 +1,10 @@
 # Grafana Helm values for EKS microservices monitoring
+# Set via environment variable before running:
+# export GRAFANA_ADMIN_PASSWORD=your-secure-password
+# Or pass at install time:
+# helm upgrade --install grafana grafana/grafana --set adminPassword=$GRAFANA_ADMIN_PASSWORD
 adminUser: admin
-adminPassword: admin123  # Change before production use
+adminPassword: "${GRAFANA_ADMIN_PASSWORD}"
 
 service:
   type: LoadBalancer

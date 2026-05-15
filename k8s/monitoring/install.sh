@@ -21,6 +21,7 @@ echo "Installing Grafana..."
 helm upgrade --install grafana grafana/grafana \
   --namespace monitoring \
   --values grafana-values.yaml \
+  --set adminPassword="${GRAFANA_ADMIN_PASSWORD}" \
   --wait
 
 echo ""
