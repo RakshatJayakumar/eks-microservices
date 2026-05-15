@@ -1,0 +1,27 @@
+# Prometheus Helm values for EKS microservices monitoring
+prometheus:
+  prometheusSpec:
+    retention: 15d
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+    # Scrape all pods with prometheus annotations
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+
+  service:
+    type: ClusterIP
+
+alertmanager:
+  enabled: false
+
+nodeExporter:
+  enabled: true
+
+grafana:
+  enabled: false  # Deployed separately

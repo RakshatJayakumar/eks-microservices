@@ -1,0 +1,43 @@
+# Grafana Helm values for EKS microservices monitoring
+adminUser: admin
+adminPassword: admin123  # Change before production use
+
+service:
+  type: LoadBalancer
+
+persistence:
+  enabled: false
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-kube-prometheus-prometheus:9090
+        access: proxy
+        isDefault: true
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: default
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    kubernetes-pods:
+      gnetId: 6417     # Official Kubernetes pods dashboard
+      revision: 1
+      datasource: Prometheus
+    kubernetes-cluster:
+      gnetId: 7249     # Kubernetes cluster monitoring
+      revision: 1
+      datasource: Prometheus
